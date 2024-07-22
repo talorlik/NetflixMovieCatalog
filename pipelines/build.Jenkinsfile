@@ -22,6 +22,8 @@ pipeline {
         DOCKER_CREDS = credentials('dockerhub')
         DOCKER_USERNAME = "${DOCKER_CREDS_USR}"  // The _USR suffix added to access the username value
         DOCKER_PASS = "${DOCKER_CREDS_PSW}"      // The _PSW suffix added to access the password value
+
+        IMAGE_FULL_NAME=$DOCKER_USERNAME/$IMAGE_BASE_NAME:$IMAGE_TAG
     }
 
     stages {
@@ -48,7 +50,7 @@ pipeline {
             steps {
                 build job: 'NetflixDeploy', wait: false, parameters: [
                     string(name: 'SERVICE_NAME', value: "NetflixMovieCatalog")
-                    string(name: 'IMAGE_FULL_NAME_PARAM', value: "${DOCKER_USERNAME}/${IMAGE_BASE_NAME}:${IMAGE_TAG}")
+                    string(name: 'IMAGE_FULL_NAME_PARAM', value: "$IMAGE_FULL_NAME")
                 ]
             }
         }
