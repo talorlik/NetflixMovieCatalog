@@ -48,7 +48,7 @@ pipeline {
             steps {
                 build job: 'NetflixDeploy', wait: false, parameters: [
                     string(name: 'SERVICE_NAME', value: "NetflixMovieCatalog")
-                    string(name: 'IMAGE_FULL_NAME_PARAM', value: "$DOCKER_USERNAME/$IMAGE_BASE_NAME:$IMAGE_TAG")
+                    string(name: 'IMAGE_FULL_NAME_PARAM', value: "${DOCKER_USERNAME}/${IMAGE_BASE_NAME}:${IMAGE_TAG}")
                 ]
             }
         }
