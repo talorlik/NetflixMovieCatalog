@@ -37,7 +37,7 @@ jobs:
     - name: Get Public IP
       id: output
       run: | 
-        terraform output -raw instance_public_ip
+        terraform output instance_public_ip
       working-directory: ./terraform
 
     - name: Use Public IP
