@@ -36,7 +36,8 @@ jobs:
 
     - name: Get Public IP
       id: output
-      run: echo "PUBLIC_IP=$(terraform output -raw instance_public_ip)" >> $GITHUB_ENV
+      run: | 
+        terraform output -raw instance_public_ip
       working-directory: ./terraform
 
     - name: Use Public IP
