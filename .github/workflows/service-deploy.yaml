@@ -13,12 +13,19 @@ jobs:
   Deploy:
     name: Deploy in EC2
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Checkout the app code
         uses: actions/checkout@v2
 
       - name: SSH to EC2 instance
         run: |
+          aws sts get-caller-identity
+          printenv
+          
+          exit 0
           echo "$SSH_PRIVATE_KEY" > mykey.pem
           chmod 400 mykey.pem
           
