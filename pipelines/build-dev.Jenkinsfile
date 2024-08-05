@@ -4,7 +4,7 @@ pipeline {
     }
 
     triggers {
-        githubPush()   // trigger the pipeline upon push event in github
+        githubPush()
     }
 
     options {
@@ -13,9 +13,6 @@ pipeline {
     }
 
     environment {
-        // GIT_COMMIT = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-        // TIMESTAMP = new Date().format("yyyyMMdd-HHmmss")
-
         IMAGE_TAG = "v1.0.$BUILD_NUMBER"
         IMAGE_BASE_NAME = "netflix-movie-catalog-dev"
 
@@ -33,22 +30,20 @@ pipeline {
             }
         }
 
-        stage('Build & Push') {
+        stage('Build app container') {
             steps {
                 sh '''
-                  IMAGE_FULL_NAME=$DOCKER_USERNAME/$IMAGE_BASE_NAME:$IMAGE_TAG
-
-                  docker build -t $IMAGE_FULL_NAME .
-                  docker push $IMAGE_FULL_NAME
+                    IMAGE_FULL_NAME=$DOCKER_USERNAME/$IMAGE_BASE_NAME:$IMAGE_TAG
+                    docker build -t $IMAGE_FULL_NAME .
+                    docker push $IMAGE_FULL_NAME
                 '''
             }
         }
-
         stage('Trigger Deploy') {
             steps {
                 build job: 'NetflixDeployDev', wait: false, parameters: [
-                    string(name: "SERVICE_NAME", value: "NetflixMovieCatalog"),
-                    string(name: "IMAGE_FULL_NAME_PARAM", value: "$DOCKER_USERNAME/$IMAGE_BASE_NAME:$IMAGE_TAG")
+                    string(name: 'SERVICE_NAME', value: "NetflixMovieCatalog"),
+                    string(name: 'IMAGE_FULL_NAME_PARAM', value: "$DOCKER_USERNAME/$IMAGE_BASE_NAME:$IMAGE_TAG")
                 ]
             }
         }
