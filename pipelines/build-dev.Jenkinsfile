@@ -17,7 +17,7 @@ pipeline {
         // TIMESTAMP = new Date().format("yyyyMMdd-HHmmss")
 
         IMAGE_TAG = "v1.0.$BUILD_NUMBER"
-        IMAGE_BASE_NAME = "netflix-app-dev"
+        IMAGE_BASE_NAME = "netflix-movie-catalog-dev"
 
         DOCKER_CREDS = credentials('dockerhub')
         DOCKER_USERNAME = "${DOCKER_CREDS_USR}"  // The _USR suffix added to access the username value
@@ -46,7 +46,7 @@ pipeline {
 
         stage('Trigger Deploy') {
             steps {
-                build job: 'NetflixDeploy', wait: false, parameters: [
+                build job: 'NetflixDeployDev', wait: false, parameters: [
                     string(name: "SERVICE_NAME", value: "NetflixMovieCatalog"),
                     string(name: "IMAGE_FULL_NAME_PARAM", value: "$DOCKER_USERNAME/$IMAGE_BASE_NAME:$IMAGE_TAG")
                 ]
