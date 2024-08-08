@@ -14,7 +14,7 @@ pipeline {
         IMAGE_TAG = "v1.0.$BUILD_NUMBER"
         IMAGE_BASE_NAME = "netflix-movie-catalog-prod"
 
-        DOCKER_CREDS = credentials('dockerhub')
+        DOCKER_CREDS = credentials('3b05bd85-f609-437c-88d3-e436599b4ac9')
         DOCKER_USERNAME = "${DOCKER_CREDS_USR}"  // The _USR suffix added to access the username value
         DOCKER_PASS = "${DOCKER_CREDS_PSW}"      // The _PSW suffix added to access the password value
     }
