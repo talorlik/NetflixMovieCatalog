@@ -23,7 +23,7 @@ COPY --from=build-stage /opt/venv /opt/venv
 # Set the virtual environment path
 ENV PATH="/opt/venv/bin:$PATH"
 # Add the python directory
-ENV PYTHONPATH="${PYTHONPATH}:/app:/app/python"
+ENV PYTHONPATH="$PYTHONPATH:/app:/app/python"
 # Set the working dir and copy application code
 WORKDIR /app
 COPY . .
@@ -34,7 +34,7 @@ RUN chown -R appuser:appgroup /app
 USER appuser
 
 # Expose the port that the app runs on
-EXPOSE 8080
+EXPOSE 8081
 
 # Command to run the app
 CMD ["python3", "app.py"]
