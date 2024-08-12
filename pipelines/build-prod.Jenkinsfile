@@ -20,7 +20,7 @@ pipeline {
     }
 
     stages {
-        stage('Docker setup') {
+        stage('Docker login') {
             steps {
                 sh '''
                   docker login -u $DOCKER_USERNAME -p $DOCKER_PASS
@@ -28,7 +28,7 @@ pipeline {
             }
         }
 
-        stage('Build app container') {
+        stage('Build and push image') {
             steps {
                 sh '''
                     IMAGE_FULL_NAME=$DOCKER_USERNAME/$IMAGE_BASE_NAME:$IMAGE_TAG
