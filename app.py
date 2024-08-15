@@ -19,7 +19,7 @@ def home():
     """
     This is the default function
     """
-    return "Booyyaa! This app is an API, there is no UI ;-)"
+    return "Hello! This app is an API, there is no UI ;-)"
 
 @app.route('/discover')
 def get_discover():
